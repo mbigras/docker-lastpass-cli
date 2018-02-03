@@ -1,0 +1,7 @@
+#!/bin/sh
+# Extract a secret from LastPass
+read -p 'Email: ' EMAIL 1>&2
+docker run --rm -itd --name lpc mbigras/lastpass-cli &>/dev/null
+docker exec -it lpc lpass login $EMAIL 1>&2
+docker exec lpc lpass show $@
+docker rm -f lpc &>/dev/null
